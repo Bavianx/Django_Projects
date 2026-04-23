@@ -27,9 +27,9 @@ def delete_book(request, pk):
     return redirect('/books/')
 
 def edit_book(request, pk):
-    book = Book.objects.get(pk=pk)  # get existing book
+    book = Book.objects.get(pk=pk)  # get existing book via the PK 
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)  # update existing
+        form = BookForm(request.POST, instance=book)  # update existing book 
         if form.is_valid():
             form.save()
             return redirect('/books/')
