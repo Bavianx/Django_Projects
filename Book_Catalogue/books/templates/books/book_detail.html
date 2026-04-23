@@ -12,6 +12,14 @@
             Checked Out
         {% endif %}
     </p>
+    <!-- Delete form -->
+    <form method="post" action="/books/delete/{{ book.pk }}/">
+        {% csrf_token %}
+        <button type="submit">Delete Book</button>
+    </form>
+    <!-- Edit button — links to edit page -->
+    <a href="/books/edit/{{ book.pk }}/">Edit Book</a>
+
     <a href="/books/">← Back to catalogue</a>
 </body>
 </html>

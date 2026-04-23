@@ -20,3 +20,19 @@ def add_book(request):
         form = BookForm()               # empty form for GET request
     
     return render(request, 'books/add_book.html', {'form': form})
+
+def delete_book(request, pk):
+    book = Book.objects.get(pk=pk)
+    book.delete()
+    return redirect('/books/')
+
+def edit_book(request, pk):
+    book = Book.objects.get(pk=pk)  # get existing book
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)  # update existing
+        if form.is_valid():
+            form.save()
+            return redirect('/books/')
+    else:
+        form = BookForm(instance=book)  # pre-fill with existing data
+    return render(request, 'books/edit_book.html', {'form': form})
