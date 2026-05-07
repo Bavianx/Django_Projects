@@ -11,8 +11,13 @@
 <div class="container-fluid px-4 mt-3">
     <div class="row g-3">
         <div class="col-md-8">
-            <h1 class="mb-3 fw-bold">Pantheon Dashboard</h1>
-            <div class="card bg-dark border-secondary p-3" style="color: #ffffff;">
+            <div class="mb-4">
+                <div class="card bg-dark border-secondary p-3">
+                    <h1 class="fw-bold">Pantheon Dashboard</h1>
+                    <p style="color: #4A5568;">Welcome back, You have {{ interviews }} interviews scheduled and {{ total }} total applications.</p>
+                </div>
+            </div>
+            <div class="card bg-dark border-secondary p-3" style="color: #4A5568;">
                 {% for job in gatherjobs %}
                     <div class="border-bottom border-secondary pb-2 mb-2 d-flex justify-content-between align-items-center">
                         <span>
@@ -42,6 +47,10 @@
                     <button type="submit">Add Job</button>
                 </form>
             </div>
+            <div class="card bg-dark border-secondary p-3">
+                <h6 class="fw-bold mb-3">Data Reviewer</h6>
+                    {{ chart_html|safe }}
+            </div>
         </div>
     </div>
 </div>
@@ -56,5 +65,55 @@ input, select {
     background-color: #1a1a1a !important;
     border-color: #444 !important;
 }
+body {
+    background-color: #F5F5F5 !important;
+    color: #2D3748;
+    font-family: 'Segoe UI', sans-serif;
+}
 
+.card {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #2D3748 !important;
+}
+
+input, select {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+    color: #2D3748 !important;
+    padding: 6px 10px !important;
+    width: 100% !important;
+}
+
+button[type="submit"] {
+    background-color: #4A9B8E !important;
+    border: none !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    padding: 8px 16px !important;
+    width: 100% !important;
+}
+
+button[type="submit"]:hover {
+    background-color: #3A8B7E !important;
+}
+
+label {
+    color: #4A5568 !important;
+    font-weight: 500 !important;
+    font-size: 0.85rem !important;
+}
+
+.status-badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
 </style>
