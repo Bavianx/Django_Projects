@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>     <!-- Main content will be a Dashboard split into 3 core section  -->
 <html>
 <head>
     <title> Job Application Tracker</title>
@@ -7,17 +7,54 @@
 <body style="background-color: #9776d6;"> </body>
 
 
-<div class="card bg-dark border-secondary p-3" style="color: #ffffff;"> 
-    {% for job in gatherjobs %}
-        {{ job.title }}
-    {% endfor %}
+<!-- Main content-->
+<div class="container-fluid px-4 mt-3">
+    <div class="row g-3">
+        <div class="col-md-8">
+            <h1 class="mb-3 fw-bold">Pantheon Dashboard</h1>
+            <div class="card bg-dark border-secondary p-3" style="color: #ffffff;">
+                {% for job in gatherjobs %}
+                    <div class="border-bottom border-secondary pb-2 mb-2 d-flex justify-content-between align-items-center">
+                        <span>
+                            <span class="fw-bold">{{ job.title }}</span> — {{ job.company }}
+                        </span>
+                        <form method="POST" action="/JobTasks/update/{{ job.id }}/">
+                            {% csrf_token %}
+                            <select name="status" onchange="this.form.submit()">
+                                {% for value, label in job.STATUS_CHOICES %}
+                                    <option value="{{ value }}" {% if job.status == value %}selected{% endif %}>
+                                        {{ label }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h1 class="mb-3 fw-bold">Add Job</h1>
+            <div class="card bg-dark border-secondary p-3">
+                <form method="POST" action="/JobTasks/">
+                    {% csrf_token %}
+                    {{ forms.as_p }}
+                    <button type="submit">Add Job</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
+<style>
+label {
+    color: #ffffff !important;
+}
 
-<div class="card bg-dark border-secondary p-3"> 
-    <form method="POST" action="/JobTasks/">
-        {% csrf_token %}
-        {{ forms.as_p }}
-        <button type="submit">Add Job</button>  
-    </form>
-</div>
+input, select {
+    color: #ffffff !important;
+    background-color: #1a1a1a !important;
+    border-color: #444 !important;
+}
+
+</style>
