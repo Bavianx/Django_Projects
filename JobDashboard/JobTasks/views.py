@@ -12,23 +12,37 @@ def dashboard(request):
     interview_count = interviews
     total = Appcontent.objects.count()
 
-    labels = ['Applied', 'Interviewing', 'Offers', 'Rejected']
-    values = [applied_count, interview_count, offer_count, rejected_count]
-
+    labels = ['Applied', 'Interviewing', 'Offers', 'Rejected'] #Key map for colours
+    values = [applied_count, interview_count, offer_count, rejected_count] #key map integer counter
+    
+    success_rate = round(((interview_count + offer_count) / total * 100), 1) if total > 0 else 0 #Success rate = getting an interview or offer 
+    
     fig = px.pie(
-        names=labels,
-        values=values,
-        color_discrete_sequence=['#4A9B8E', '#6C8EBF', '#F6AD55', '#FC8181']
+        names=labels,   #Ties colour to the labels
+        values=values,  #Ties values to the count
+        hole=0.5
     )
 
+    fig.update_traces(
+        marker=dict(colors=['#4A9B8E', '#6C8EBF', '#F6AD55', '#FC8181']), #Bypassed the plotly colour charting logic as it was missmatch prior
+        textinfo='none',
+        hovertemplate='%{label}: %{value}<extra></extra>'
+    )
+
+    fig.add_annotation(
+        text=f"{success_rate}%<br><span style='font-size:10px'>SUCCESS</span>",
+        x=0.5, y=0.5,
+        font_size=16,
+        showarrow=False
+    )
     fig.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=0, r=0, t=0, b=0),
-        showlegend=True,
-        height=250
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    margin=dict(l=0, r=0, t=0, b=0),
+    coloraxis_showscale=False,
+    height=150,
+    showlegend=False
     )
-
     chart_html = fig.to_html(full_html=False, include_plotlyjs='cdn')
 
     if request.method == 'POST':
@@ -51,6 +65,7 @@ def dashboard(request):
         'rejected_count': rejected_count,
         'offer_count': offer_count,
         'interview_count': interview_count,
+        'success_rate': success_rate,
     }
     
     return render(request, 'JobTasks/Dashboardview.html', context)

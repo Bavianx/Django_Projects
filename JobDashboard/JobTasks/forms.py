@@ -4,7 +4,7 @@ from .models import Appcontent
 class JobForm(forms.ModelForm):
     class Meta: 
         model = Appcontent
-        fields = ['title', 'salary', 'location','date', 'company', 'status' ]
+        fields = ['title', 'salary', 'location','date', 'company']
         labels = {
             'title': 'Job Title',
             'company': 'Company Name',
