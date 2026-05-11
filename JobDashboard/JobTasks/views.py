@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Appcontent
 from .forms import JobForm
 import plotly.express as px
+from django.utils import timezone
+from datetime import date
 
 def dashboard(request):
     All_Jobs = Appcontent.objects.all()
@@ -16,6 +18,7 @@ def dashboard(request):
     values = [applied_count, interview_count, offer_count, rejected_count] #key map integer counter
     
     success_rate = round(((interview_count + offer_count) / total * 100), 1) if total > 0 else 0 #Success rate = getting an interview or offer 
+    offers = Appcontent.objects.filter(status ='offer')
     
     fig = px.pie(
         names=labels,   #Ties colour to the labels
@@ -55,6 +58,23 @@ def dashboard(request):
     All_Jobs = Appcontent.objects.all()
     form = JobForm()
 
+    jobs_with_days = []
+    for job in All_Jobs:
+        if job.date:
+            days_ago = (date.today() - job.date).days
+            if days_ago == 0:
+                time_label = "Today"
+            elif days_ago == 1:
+                time_label = "1 day ago"
+            else:
+                time_label = f"{days_ago} days ago"
+        else:
+            time_label = "Date Unknown"
+        jobs_with_days.append({
+            'job': job,
+            'time_label': time_label
+        })
+
     context = {
         'gatherjobs': All_Jobs,
         'forms': form, 
@@ -66,6 +86,8 @@ def dashboard(request):
         'offer_count': offer_count,
         'interview_count': interview_count,
         'success_rate': success_rate,
+        'offers': offers,
+        'jobs_with_days': jobs_with_days,
     }
     
     return render(request, 'JobTasks/Dashboardview.html', context)
@@ -75,6 +97,12 @@ def update_job(request, pk):
     if request.method == 'POST':
         job.status = request.POST['status']  #Changes the field status (new updated event)
         job.save()  
+        return redirect('/JobTasks/')
+    
+def delete_job(request, pk):
+    job = Appcontent.objects.get(id=pk)  #Tags the current request to the ids primary key (single event change rather than all)
+    if request.method == 'POST':
+        job.delete()  
         return redirect('/JobTasks/')
 
 
