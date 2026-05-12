@@ -1,45 +1,51 @@
-<!DOCTYPE html>     <!-- Main content will be a Dashboard split into 3 core section  -->
+{% load humanize %}
+<!DOCTYPE html> 
 <html>
 <head>
     <title> Job Application Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 
 <!-- Main content-->
 <div class="container-fluid px-4 mt-3">
     <div class="row g-3">
         <div class="col-md-8">
-            <div class="mb-4">
-                <div class="card bg-dark border-secondary p-3">
-                    <h1 class="fw-bold">Pantheon Dashboard</h1>
-                    <p style="color: #4A5568;">Welcome back, you have {{ interviews }} interviews scheduled and {{ total }} total applications.</p>
-                </div>
+            <div class="card p-3 mb-4">
+                <h1 class="fw-bold mb-2">Welcome back <span style="color: #4A9B8E;">Pantheoner</span>,</h1>
+                <p style="font-size: 18px;">
+                    <span style="color: #4A9B8E; font-weight: 800;">{{ interviews }}</span> 
+                    interviews scheduled and 
+                    <span style="color: #4A9B8E; font-weight: 800;">{{ total }}</span> 
+                    total applications.
+                </p>
             </div>
             <div class="card bg-dark border-secondary p-3" style="color: #4A5568;">
                 <h3 class="mb-3 fw-bold">Current Applications</h3>
                 <div class="card p-3" style="max-height: 400px; overflow-y: auto;">
                     {% for item in jobs_with_days %}
-                        <div class="border-bottom border-secondary pb-2 mb-2 d-flex justify-content-between align-items-center">
-                            <span>
-                                <span class="fw-bold">{{ item.job.title }}</span><br>
-                                <small style="color: #4A5568;">{{ item.job.company }} • {{ item.time_label }}</small>
-                            </span>
-                            <div class="d-flex align-items-center gap-2">
-                                <form method="POST" action="/JobTasks/update/{{ item.job.id }}/">
-                                    {% csrf_token %}
-                                    <select name="status" onchange="this.form.submit()" style="font-size: 0.8rem; padding: 3px 6px;">
-                                        {% for value, label in item.job.STATUS_CHOICES %}
-                                            <option value="{{ value }}" {% if item.job.status == value %}selected{% endif %}>
-                                                {{ label }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                </form>
-                                <form method="POST" action="/JobTasks/delete/{{ item.job.id }}/">
-                                    {% csrf_token %}
-                                    <button type="submit" style="background: none; border: none; color: #FC8181; cursor: pointer; font-size: 0.8rem;">✕</button>
-                                </form>
+                        <div class="mb-2 p-2 rounded" style="background-color: #F7FAFC; border: 1px solid #EDF2F7; transition: background 0.2s ease;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>
+                                    <span class="fw-bold">{{ item.job.title }}</span><br>
+                                    <small style="color: #4A5568;">{{ item.job.company }} • {{ item.time_label }}</small>
+                                </span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <form method="POST" action="/JobTasks/update/{{ item.job.id }}/">
+                                        {% csrf_token %}
+                                        <select name="status" onchange="this.form.submit()" style="font-size: 0.8rem; padding: 3px 6px;">
+                                            {% for value, label in item.job.STATUS_CHOICES %}
+                                                <option value="{{ value }}" {% if item.job.status == value %}selected{% endif %}>
+                                                    {{ label }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </form>
+                                    <form method="POST" action="/JobTasks/delete/{{ item.job.id }}/">
+                                        {% csrf_token %}
+                                        <button type="submit" style="background: none; border: none; color: #FC8181; cursor: pointer; font-size: 0.8rem;">✕</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
@@ -48,7 +54,7 @@
             <div class="mt-3">
                 <div class="card p-3">
                 <h4 class="fw-bold mb-3">Offer Comparison</h4>
-                    <div class="row">
+                    <div class="row g-3">
                         {% for offer in offers|slice:":2" %}
                             <div class="col-md-6">
                                 <div class="card p-3">
@@ -57,7 +63,7 @@
                                     <hr>
                                     <div class="d-flex justify-content-between">
                                         <small>Salary</small>
-                                        <small class="fw-bold">£{{ offer.salary }}</small>
+                                        <small class="fw-bold">£{{ offer.salary|floatformat:0|intcomma }}</small>
                                     </div>
                                     <div class="d-flex justify-content-between mt-1">
                                         <small>Location</small>
@@ -72,7 +78,7 @@
         </div>
     <div class="col-md-4">
         <!-- Add Job Card -->
-        <div class="card p-2 mb-3">
+        <div class="card p-2 mb-3" style="min-height: 500px;">
             <h3 class="mb-3 mt-3 fw-bold px-3">Add Job</h3>
             <form method="POST" action="/JobTasks/" class="mx-3">
                 {% csrf_token %}
@@ -82,13 +88,13 @@
         </div>
 
     <!-- Data Reviewer Card -->
-    <div class="card p-3">
-        <h6 class="fw-bold mb-3">Data Reviewer</h6>
-        <div class="d-flex data-reviewer-flex">
+    <div class="card p-3"  style="min-height: 350px;">
+        <h3 class="fw-bold mb-5 mt-">Data Reviewer</h3>
+        <div class="d-flex data-reviewer-flex mt-3">
             <div style="width: 250px; flex-shrink: 0;">
                 {{ chart_html|safe }}
             </div>
-            <div style="flex: 1;" class="d-flex flex-column justify-content-center ps-2">
+            <div style="flex: 1;" class="d-flex flex-column justify-content-center ps-2 mt-3">
                 <div class="mb-2">
                     <span style="color: #4A9B8E;">●</span>
                     <small style="color: #4A5568;"> Applied</small>
@@ -125,25 +131,63 @@ input, select {
     border-color: #444 !important;
 }
 body {
-    background-color: #F5F5F5 !important;
+    font-family: 'Inter', sans-serif !important;
+    background-color: #F5F7FA;
     color: #2D3748;
-    font-family: 'Segoe UI', sans-serif;
+}
+.container-fluid {
+    background-color: #F0F4F8;
+}
+.card {
+    border: 1px solid #E8EDF2 !important;
+    border-radius: 12px !important;
+    background-color: #FFFFFF !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06) !important;
+    transition: all 0.2s ease;
 }
 
-.card {
-    background-color: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 12px !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08) !important;
+}
+
+.welcome-card {
+    border-left: 4px solid #4A9B8E !important;
+    background: linear-gradient(135deg, #FFFFFF 0%, #ffffffe3 100%) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
 }
 
 .card p {
     margin-bottom: 5px !important;
 }
+h1 {
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    color: #1A202C !important;
+    letter-spacing: 1.6px !important;
+}
 
-
-h1, h2, h3, h4, h5, h6 {
+h3 {
+    font-size: 1.4rem !important;
+    font-weight: 600 !important;
     color: #2D3748 !important;
+    letter-spacing: 0.5px !important;
+}
+
+h6 {
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    color: #718096 !important;
+}
+
+ h2, h4, h5 {
+    color: #2D3748 !important;
+}
+
+p, small {
+    color: #4A5568;
 }
 
 input, select {
@@ -160,12 +204,23 @@ button[type="submit"] {
     border: none !important;
     border-radius: 8px !important;
     color: #ffffff !important;
-    padding: 8px 16px !important;
+    padding: 10px 16px !important;
     width: 100% !important;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    box-shadow: 0 2px 4px rgba(74,155,142,0.3), 0 1px 2px rgba(74,155,142,0.2) !important;
+    transition: all 0.2s ease !important;
 }
 
 button[type="submit"]:hover {
     background-color: #3A8B7E !important;
+    box-shadow: 0 4px 8px rgba(74,155,142,0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+button[type="submit"]:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 1px 2px rgba(74,155,142,0.3) !important;
 }
 
 label {
@@ -179,6 +234,10 @@ label {
     border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 500;
+}
+
+.app-row:hover {
+    background-color: #EDF2F7 !important;
 }
 
 ::-webkit-scrollbar {

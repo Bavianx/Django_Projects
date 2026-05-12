@@ -15,7 +15,7 @@ class Appcontent(models.Model):
     salary = models.FloatField()
     location = models.CharField(max_length=25)
     date = models.DateField(null = True, blank=True)  #Allows the field to be omitted in forms and the database to store a null value until inputted
-    company = models.CharField(max_length=20, default='Unknown')
+    company = models.CharField(max_length=20, default='')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='applied')
 
     def __str__(self):
