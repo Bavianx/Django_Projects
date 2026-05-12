@@ -14,6 +14,7 @@ Data Reviewer — Donut chart showing application breakdown by status with live 
 Welcome Stats — At a glance view of total applications and active interviews
 Scrollable Application List — Clean card-based list with custom teal scrollbar
 Responsive Design — Adapts cleanly across screen sizes
+(Tracks interviews as successful due to ROI of use, if rejected after 3rd interview swap to rejected to reformat the true success rate) 
 
 
 ## Installation
@@ -34,12 +35,12 @@ Then visit http://127.0.0.1:8000/JobTasks/
 
 # V2 Roadmap
 
-- [] AI Career Insights — analyse success rate, role types, and salary data to suggest personalised next steps and career path recommendations
-- [] PostgreSQL — production database replacing SQLite
-- [] Application Notes — add notes and follow up reminders per application
-- [] Email Reminders — automated follow up nudges based on days since applied
-- [] Cover Letter Storage — attach and store tailored cover letters per application
-- [] Interview Prep — link resources and notes to specific interview stages
-- [] Export to CSV — download full application history
-- [] Success Rate Trends — track how your success rate changes over time
-- [] Company Research Panel — pull company data and news alongside each application
+- [ ] AI Career Insights — analyse success rate, role types, and salary data to suggest personalised next steps and career path recommendations
+- [ ] PostgreSQL — production database replacing SQLite
+- [ ] Application Notes — add notes and follow up reminders per application
+- [ ] Email Reminders — automated follow up nudges based on days since applied
+- [ ] Cover Letter Storage — attach and store tailored cover letters per application
+- [ ] Interview Prep — link resources and notes to specific interview stages
+- [ ] Export to CSV — download full application history
+- [ ] Success Rate Trends — track how your success rate changes over time
+- [ ] Company Research Panel — pull company data and news alongside each application
