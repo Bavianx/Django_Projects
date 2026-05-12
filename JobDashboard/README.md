@@ -6,14 +6,22 @@ Pantheon gives job seekers a single place to manage their entire application pip
 
 # Features
 
-Application Tracking — Add, update and delete job applications with company, title, salary, location and date applied
-Live Stage Updates — Inline dropdown to update application status without leaving the dashboard
-Days Since Applied — Each application shows how long ago you applied
-Offer Comparison — Side by side salary and location comparison for your top offers
-Data Reviewer — Donut chart showing application breakdown by status with live success rate
-Welcome Stats — At a glance view of total applications and active interviews
-Scrollable Application List — Clean card-based list with custom teal scrollbar
-Responsive Design — Adapts cleanly across screen sizes
+- Application Tracking — Add, update and delete job applications with company, title, salary, location and date applied
+  
+- Live Stage Updates — Inline dropdown to update application status without leaving the dashboard
+  
+- Days Since Applied — Each application shows how long ago you applied
+  
+- Offer Comparison — Side by side salary and location comparison for your top offers
+  
+- Data Reviewer — Donut chart showing application breakdown by status with live success rate
+  
+- Welcome Stats — At a glance view of total applications and active interviews
+  
+- Scrollable Application List — Clean card-based list with custom teal scrollbar
+  
+- Responsive Design — Adapts cleanly across screen sizes
+  
 (Tracks interviews as successful due to ROI of use, if rejected after 3rd interview swap to rejected to reformat the true success rate) 
 
 
