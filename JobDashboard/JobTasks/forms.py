@@ -14,7 +14,7 @@ class JobForm(forms.ModelForm):
             'status': 'Application Status',
         }
 
-        widgets = {
+        widgets = { #Placeholders
             'company': forms.TextInput(attrs={'placeholder': '~ Google'}),
             'title': forms.TextInput(attrs={'placeholder': '~ Software Engineer'}),
             'date': forms.DateInput(attrs={'type': 'date'})
