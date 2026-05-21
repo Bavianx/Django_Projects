@@ -52,3 +52,7 @@ Then visit http://127.0.0.1:8000/JobTasks/
 - [ ] Export to CSV — download full application history
 - [ ] Success Rate Trends — track how your success rate changes over time
 - [ ] Company Research Panel — pull company data and news alongside each application
+      
+## Application Screenshot
+<img width="1904" height="908" alt="image" src="https://github.com/user-attachments/assets/d171c1a9-d062-497e-b374-3dbdc69dab9e" />
+
